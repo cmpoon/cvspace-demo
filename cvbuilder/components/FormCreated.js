@@ -22,23 +22,22 @@ export default class FormCreated extends Component {
     const userformURL = getFormURL(formID);
     const adminURL = getAdminURL(adminToken);
 
-    const twitterText = `I've just created a form, it is at ${userformURL}!`;
+    const twitterText = `I've just created my CV, take a look at ${userformURL}!`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}`;
 
-    const emailSubject = `Hey, I just created a new form`;
-    const emailBody = `Hi folks,
+    const emailSubject = `My CV`;
+    const emailBody = `Dear Sir/Madam,
 
-I just created a new form and it's available at:
-
+Please take a look at my CV from:
     ${userformURL}
 
-Please, take some time to fill it,
+Yours sincerely,
 `;
 
     const emailUrl = `mailto:?subject=${emailSubject}&body=${encodeURIComponent(emailBody)}`;
     return (
       <form>
-        <h3>Neat, your form is now ready!</h3>
+        <h3>Neat, your CV is now ready for the world!</h3>
         <div className="form-group">
           <ul className="list-inline">
             <li><button className="btn btn-link"><i className="glyphicon glyphicon-send" />

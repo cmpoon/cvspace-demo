@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Welcome from "../components/Welcome";
 import * as FieldListActions from "../actions/fieldlist";
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {};
 }
 

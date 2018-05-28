@@ -2,56 +2,105 @@ export default {
   projectName: process.env.PROJECT_NAME || "CV Builder",
   server: {
     remote: process.env.SERVER_URL,
-    bucket: "cvspacebuilder",
+    bucket: "cvsbuilder",
   },
   appURL: process.env.APP_URL || window.location.origin + window.location.pathname,
   fieldList: [
     {
-      id: "text",
+      id: "name",
       icon: "text-color",
-      label: "Short text",
+      label: "Name & Contact",
       jsonSchema: {
         type: "string",
-        title: "Edit me",
-        description: "",
-        default: ""
+        title: "Name",
+          description: "",
+        default: "Your Name Here"
       },
       uiSchema: {
         editSchema: {
           type: "object",
           properties: {
-            title: {type: "string", title: "Label"},
-            description: {type: "string", title: "Example value"},
-            required: {type: "boolean"},
+            title: {type: "string", title: "Your Name"},
+            description: {type: "string", title: "Your Address"},
+            phone: {type: "string", title: "Your Mobile Phone"},
+            uniemail: {type: "string", title: "Your University Email"},
+            personalemail: {type: "string", title: "Your Personal Email"},
           }
         },
       },
       formData: {}
     },
-    {
-      id: "multilinetext",
-      icon: "align-left",
-      label: "Long text",
-      jsonSchema: {
-        type: "string",
-        title: "Edit me",
-        description: "",
-        default: ""
+      {
+          id: "edu",
+          icon: "align-left",
+          label: "Education",
+          jsonSchema: {
+              type: "string",
+              title: "Edit me",
+              description: "",
+              default: ""
+          },
+          uiSchema: {
+              "ui:widget": "textarea",
+              editSchema: {
+                  type: "object",
+                  properties: {
+                      title: {type: "string", title: "University Attending", default: "Imperial College London"},
+                      description: {type: "string", title: "Course", default:"BSc in Mathematics"},
+                      expresults: {type: "string", title: "Expected Results Summary"},
+                      college: {type: "string", title: "Secondary Education"},
+                      colresults: {type: "string", title: "A-Level Results"},
+                      gcseresults: {type: "string", title: "GCSE and Other Qualification Summary"},
+                  }
+              },
+          },
+          formData: {}
       },
-      uiSchema: {
-        "ui:widget": "textarea",
-        editSchema: {
-          type: "object",
-          properties: {
-            title: {type: "string", title: "Label"},
-            description: {type: "string", title: "Example value"},
-            required: {type: "boolean"},
-          }
-        },
+      {
+          id: "workexp",
+          icon: "align-left",
+          label: "Work Experience",
+          jsonSchema: {
+              type: "string",
+              title: "Edit me",
+              description: "",
+              default: ""
+          },
+          uiSchema: {
+              "ui:widget": "textarea",
+              editSchema: {
+                  type: "object",
+                  properties: {
+                      title: {type: "string", title: "Section Header"},
+                      description: {type: "string", title: "Bullet Points"}
+                  }
+              },
+          },
+          formData: {}
       },
-      formData: {}
-    },
-    {
+      {
+          id: "multilinetext",
+          icon: "align-left",
+          label: "Experience Section",
+          jsonSchema: {
+              type: "string",
+              title: "Edit me",
+              description: "",
+              default: ""
+          },
+          uiSchema: {
+              "ui:widget": "textarea",
+              editSchema: {
+                  type: "object",
+                  properties: {
+                      title: {type: "string", title: "Section Header"},
+                      description: {type: "string", title: "Bullet Points"}
+                  }
+              },
+          },
+          formData: {}
+      },
+    /*{
       id: "checkbox",
       icon: "check",
       label: "Checkbox",
@@ -70,27 +119,26 @@ export default {
         },
       },
       formData: {}
-    },
+    },*/
     {
-      id: "multiple-checkbox",
-      icon: "check",
-      label: "Multiple choices",
-      jsonSchema: {
-        type: "array",
-        title: "A multiple choices list",
-        items: {
-          type: "string",
-          enum: ["choice 1", "choice 2", "choice 3"],
+        id: "multiple-checkbox",
+        icon: "check",
+        label: "Bullet Points",
+        jsonSchema: {
+            type: "array",
+            title: "Bullet points for this section",
+            items: {
+                type: "string",
+                enum: ["Partcipated in...", "Delivered...", "Implemented..."],
+            },
+            uniqueItems: true,
         },
-        uniqueItems: true,
-      },
       uiSchema: {
         "ui:widget": "checkboxes",
         editSchema: {
           type: "object",
           properties: {
             title: {type: "string", title: "Label"},
-            required: {type: "boolean"},
             items: {
               type: "object",
               title: "Choices",
@@ -101,7 +149,7 @@ export default {
                   items: {
                     type: "string"
                   },
-                  default: ["choice 1", "choice 2", "choice 3"],
+                  default: ["Partcipated in...", "Delivered...", "Implemented..."],
                 }
               }
             }
@@ -110,7 +158,7 @@ export default {
       },
       formData: {}
     },
-    {
+    /*{
       id: "radiobuttonlist",
       icon: "list",
       label: "Choice list",
@@ -166,23 +214,22 @@ export default {
         },
       },
       formData: {}
-    },
+    },*/
     {
       id: "date",
       icon: "calendar",
-      label: "Date",
+      label: "Start/End Date",
       jsonSchema: {
         type: "string",
         format: "date",
-        title: "Edit me",
+        title: "Start and End Dates",
       },
       uiSchema: {
         "ui:widget": "alt-date",
         editSchema: {
           type: "object",
           properties: {
-            title: {type: "string", title: "Label"},
-            required: {type: "boolean"}
+            title: {type: "string", title: "Label"}
           }
         },
       },

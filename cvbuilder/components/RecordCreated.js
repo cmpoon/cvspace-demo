@@ -8,8 +8,8 @@ export default function RecordCreated(props) {
 
   return (
     <div>
-      <h3>Submitted!</h3>
-      Thanks, your data has been submitted!
+      <h3>Thanks!</h3>
+      Your interest in this CV has been noted.
     </div>
   );
 }

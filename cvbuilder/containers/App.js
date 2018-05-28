@@ -5,12 +5,14 @@ export default function App(props) {
   const contentClassName = sidebarComponent? "col-sm-9" : "col-sm-9 center";
 
   if (mainComponent) {
-    return <div>{mainComponent}</div>;
+      return <div>{React.cloneElement(mainComponent, {parentProps: props})}</div>;
+    /* return <div>{mainComponent}</div>;*/
   }
 
   return (
     <div>
       {header}
+      <div id="newh"></div>
       <div className="container">
         <div className="row">
           {sidebarComponent ? <div className="col-sm-3">{sidebarComponent}</div> : <div/>}

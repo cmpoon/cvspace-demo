@@ -3,7 +3,7 @@
   "description": "Create your own CV.",
   "repository": "https://github.com/cmpoon/cvspace-frontend",
   "website": "https://cv.cmpoon.com",
-  "logo": "https://cv.cmpoon.com/assets/img/logo.png",
+  "logo": "https://cv.cmpoon.com/assets/imgages/logo.png",
   "env": {
     "PROJECT_NAME": {
       "description": "Name of the project. Defaults to \"formbuilder\".",

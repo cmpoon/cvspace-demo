@@ -22,7 +22,7 @@ export const SCHEMA_RETRIEVAL_DONE = "SCHEMA_RETRIEVAL_DONE";
 export const RECORDS_RETRIEVAL_PENDING = "RECORDS_RETRIEVAL_PENDING";
 export const RECORDS_RETRIEVAL_DONE = "RECORDS_RETRIEVAL_DONE";
 
-const CONNECTIVITY_ISSUES = "This is usually due to an unresponsive server or some connectivity issues.";
+const CONNECTIVITY_ISSUES = "This is usually due to connectivity issues.";
 
 function connectivityIssues(dispatch, message) {
   const msg = message +  " " + CONNECTIVITY_ISSUES;
@@ -33,7 +33,8 @@ function connectivityIssues(dispatch, message) {
  * Return HTTP authentication headers from a given token.
  **/
 function getAuthenticationHeaders(token) {
-  return {Authorization: "Basic " + btoa(`form:${token}`)};
+  console.log("Auth Token: " + btoa(`cv:${token}`) + " from "  + token);
+  return {Authorization: "Basic " + btoa(`cv:${token}`)};
 }
 
 /**
@@ -52,6 +53,7 @@ function initializeBucket() {
     safe: true,
     permissions: {
       "collection:create": ["system.Authenticated",]
+       // "collection:create": ["system.Everyone",]
     }
   }).then(() => {
     api.bucket(config.server.bucket).setPermissions({
@@ -97,7 +99,8 @@ export function publishForm(callback) {
     bucket.createCollection(formID, {
       data: {schema, uiSchema},
       permissions: {
-        "record:create": ["system.Authenticated"]
+        //"record:create": ["system.Authenticated"]
+          "record:create": ["system.Everyone"]
       }
     })
     .then(({data}) => {
@@ -116,13 +119,17 @@ export function publishForm(callback) {
       if (error.response === undefined) {
         throw error;
       }
+
+      console.log("New CV to be created");
       // If the bucket doesn't exist, try to create it.
-      if (error.response.status === 403 && retry === true) {
+      if (error.response.status === 403 && retry === true ) {
         return initializeBucket().then(() => {
           thunk(dispatch, getState, false);
         });
       }
-      connectivityIssues(dispatch, "We were unable to publish your form.");
+        console.log("... creation skipped:");
+      console.log({error, retry});
+      connectivityIssues(dispatch, "We were unable to publish your CV.");
       dispatch({type: FORM_PUBLICATION_FAILED});
     });
   };
@@ -152,7 +159,7 @@ export function submitRecord(record, collection, callback) {
       }
     })
     .catch((error) => {
-      connectivityIssues(dispatch, "We were unable to publish your answers");
+      connectivityIssues(dispatch, "We were unable to publish your CV interest");
     });
   };
 }
@@ -175,7 +182,7 @@ export function loadSchema(formID, callback) {
       }
     })
     .catch((error) => {
-      connectivityIssues(dispatch, "We were unable to load your form");
+      connectivityIssues(dispatch, "We were unable to load your CV");
     });
   };
 }
@@ -206,7 +213,7 @@ export function getRecords(adminToken, callback) {
     .catch((error) => {
       connectivityIssues(
         dispatch,
-        "We were unable to retrieve the list of records for your form."
+        "We were unable to retrieve the list of records for your CV."
       );
     });
   };

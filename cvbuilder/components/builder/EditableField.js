@@ -58,7 +58,7 @@ class FieldPropertiesEditor extends Component {
 
             <ButtonToolbar className="pull-right">
               <FieldListDropdown bsStyle="link" {...this.props}>
-                change field <i className="glyphicon glyphicon-cog"/>
+                change section <i className="glyphicon glyphicon-cog"/>
               </FieldListDropdown>
               <Button bsStyle="link" onClick={onDelete}>
                 delete <i className="glyphicon glyphicon-trash"/>
@@ -74,7 +74,7 @@ class FieldPropertiesEditor extends Component {
             formData={formData}
             onChange={this.onChange.bind(this)}
             onSubmit={onUpdate}>
-            <button type="submit" className="btn btn-info pull-right">Submit</button>
+            <button type="submit" className="btn btn-info pull-right">Save Section</button>
           </Form>
         </div>
       </div>
@@ -137,12 +137,12 @@ export default class EditableField extends Component {
     const schema = {...this.props.schema, ...updated};
     this.setState({edit: false, schema});
     this.props.updateField(
-      this.props.name, schema, formData.required, formData.title);
+      this.props.name, schema, formData.description, formData.title);
   }
 
   handleDelete(event) {
     event.preventDefault();
-    if (confirm("Are you sure you want to delete this field?")) {
+    if (confirm("Are you sure you want to delete this section?")) {
       this.props.removeField(this.props.name);
     }
   }

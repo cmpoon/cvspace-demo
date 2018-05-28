@@ -42,7 +42,7 @@ const BackAndCheck = (props) => {
     <div>
       <LinkToBuilder text="Continue editing" {...props} >
         <Link className="list-group-item" to="/builder/json">
-          <i className="glyphicon glyphicon-fullscreen" /> View as JSON
+          <i className="glyphicon glyphicon-fullscreen" /> Admin - Export CV as JSON
         </Link>
       </LinkToBuilder>
       <Check />
@@ -83,9 +83,9 @@ export default (
         components={{...common, sidebarComponent: BackAndDownloadJSONSchema, content: JsonViewContainer}} />
       <Route path="builder/published/:adminToken"
         components={{...common, sidebarComponent: BackAndCheck, content: FormCreatedContainer}} />
-      <Route path="form/data-sent"
+      <Route path="cv/data-sent"
         components={{...common, sidebarComponent: Check, content: RecordCreatedContainer}} />
-      <Route path="form/:id"
+      <Route path="cv/:id"
         components={{...common, mainComponent: UserFormContainer}} />
       <Route path="admin/:adminToken"
         components={{...common, sidebarComponent: null, header: null, content: AdminViewContainer}} />

@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   schema: {
     type: "object",
     title: "Untitled CV",
-    description: "Enter some description for your CV here",
+    description: "Enter some description for your CV here - e.g. which company is it for?",
     properties: {}
   },
   uiSchema: {
@@ -44,7 +44,8 @@ function unique(array) {
 function addField(state, field) {
   // Generating a usually temporary random, unique field name.
   state.currentIndex += 1;
-  const name = `Question ${state.currentIndex}`;
+  //const name = `Section ${state.currentIndex}`;
+  const name = `${field.label} ${state.currentIndex}`;
   const _slug = slugify(name);
   state.schema.properties[_slug] = {...field.jsonSchema, title: name};
   state.uiSchema[_slug] = field.uiSchema;

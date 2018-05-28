@@ -25,7 +25,7 @@ export default class AdminView extends Component {
       content = (
       <div>
         <h3>Results for {title}</h3>
-        <DropdownButton title="Download results" id="bg-nested-dropdown" className="pull-right">
+        <DropdownButton title="Download CV" id="bg-nested-dropdown" className="pull-right">
           <li>
             <CSVDownloader
               schema={this.props.schema}

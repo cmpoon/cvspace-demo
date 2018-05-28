@@ -20,7 +20,7 @@ export function getFormID(adminToken) {
  * available.
  **/
 export function getFormURL(formID) {
-  return `${config.appURL}#/form/${formID}`;
+  return `${config.appURL}#/cv/${formID}`;
 }
 
 /**

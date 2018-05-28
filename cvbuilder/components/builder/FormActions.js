@@ -21,17 +21,17 @@ export default function FormActions(props) {
       <ButtonToolbar className="builder-inner-actions">
         <FieldListDropdown className="pull-right" {...props}>
           <i className="glyphicon glyphicon-plus" />
-          Add a field
+          Add a Section
         </FieldListDropdown>
       </ButtonToolbar>
       <ButtonGroup className="pull-right">
-        <Button onClick={() => confirm("This action will reset all unsaved changes, Are you sure?") && props.resetForm()}>
+        <Button onClick={() => confirm("This action will delete all unsaved changes to the CV, Are you sure?") && props.resetForm()}>
           <i className="glyphicon glyphicon-remove" />
-          Reset <span className="hidden-xs">form</span>
+          Delete <span className="hidden-xs">CV</span>
         </Button>
         <Button bsStyle="success" onClick={onClick}>
           <i className={`glyphicon glyphicon-${saveIconName}`} />
-          Save your form
+          Save your CV
         </Button>
       </ButtonGroup>
     </div>

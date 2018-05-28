@@ -2,8 +2,8 @@ var path = require("path");
 var express = require("express");
 var webpack = require("webpack");
 
-var port = process.env.PORT || 8080;
-var host = process.env.HOST || "localhost";
+var port = process.env.PORT || 80;
+var host = process.env.HOST || "0.0.0.0";
 
 var env = "dev";
 
@@ -22,6 +22,9 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "cvbuilder", "index.html"));
 });
 
+app.get("/favicon.ico", function(req, res) {
+    res.sendFile(path.join(__dirname, "cvbuilder", "favicon.ico"));
+});
 app.get("/react-jsonschema-form.css", function(req, res) {
   res.sendFile(path.join(__dirname, "css", "react-jsonschema-form.css"));
 });

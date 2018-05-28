@@ -38,5 +38,5 @@ export default function XLSDownloader(props) {
   const fileContent = "data:text/plain;base64," + btoa(xls);
 
   return <a download={filename}
-            href={fileContent}>XLS</a>;
+            href={fileContent}>Admin - Export to Excel</a>;
 }
