@@ -26,7 +26,7 @@ export default function Welcome(props) {
                 <div className="row">
                     <div className="main-slider">
                         <div className="slide-text">
-                            <h1>Create your perfect banking CV today</h1>
+                            <h1>Create your perfect CV today</h1>
                             <p>Did you know that on average, HR will spend under five seconds reading your CV to decide whether to give you an interview?</p>
                             <p>That's five seconds to convince them that you meet their criteria!</p>
                             <p>Our state-of-the-art algorithm creates a perfectly formatted CV, specifically tailored for students and graduates applying for internships and full-time roles at investment banks.</p>

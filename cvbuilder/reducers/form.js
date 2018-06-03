@@ -18,11 +18,11 @@ const INITIAL_STATE = {
   error: null,
   schema: {
     type: "object",
-    title: "Untitled CV",
-    description: "Enter some description for your CV here - e.g. which company is it for?",
-    properties: {}
+      title: "Untitled CV",
+      description: "Enter some description for your CV here - e.g. which company is it for?",
+      properties: {}
   },
-  uiSchema: {
+    uiSchema: {
     "ui:order": []
   },
   formData: {},
@@ -45,11 +45,27 @@ function addField(state, field) {
   // Generating a usually temporary random, unique field name.
   state.currentIndex += 1;
   //const name = `Section ${state.currentIndex}`;
-  const name = `${field.label} ${state.currentIndex}`;
+  const name = `${field.label}`;
   const _slug = slugify(name);
+
+  if (existing.indexOf(_slug) !== -1){
+      const name = `${field.label} ${state.currentIndex}`;
+      const _slug = slugify(name);
+  }
+
   state.schema.properties[_slug] = {...field.jsonSchema, title: name};
   state.uiSchema[_slug] = field.uiSchema;
   state.uiSchema["ui:order"] = (state.uiSchema["ui:order"] || []).concat(_slug);
+
+
+  // Add to mandatory list of fields
+  const requiredFields = state.schema.required || [];
+
+  if (field.required) {
+      // Ensure uniquely required field names
+      state.schema.required = unique(requiredFields.concat(name));
+  }
+
   return state;
 }
 
@@ -74,7 +90,7 @@ function removeField(state, name) {
   return {...state, error: null};
 }
 
-function updateField(state, name, schema, required, newLabel) {
+function updateField(state, name, schema, required, newLabel, formData) {
   const existing = Object.keys(state.schema.properties);
   const newName = slugify(newLabel);
   if (name !== newName && existing.indexOf(newName) !== -1) {
@@ -84,16 +100,21 @@ function updateField(state, name, schema, required, newLabel) {
   }
   const requiredFields = state.schema.required || [];
   state.schema.properties[name] = schema;
-  if (required) {
+ /* if (required) {
     // Ensure uniquely required field names
     state.schema.required = unique(requiredFields.concat(name));
   } else {
     state.schema.required = requiredFields
       .filter(requiredFieldName => name !== requiredFieldName);
-  }
+  }*/
   if (newName !== name) {
-    return renameField(state, name, newName);
+    //Don't change field name
+
+    //return renameField(state, name, newName);
   }
+    console.log("updateSchema");console.log(formData);
+  //  state.schema.properties[name].default = JSON.stringify(formData);
+
   return {...state, error: null};
 }
 
@@ -151,6 +172,8 @@ function updateFormDescription(state, {description}) {
 function setSchema(state, data) {
   state.schema = data.schema;
   state.uiSchema = data.uiSchema;
+  //state.schema.default = data.uiSchema;
+    console.log("setSchema");console.log(data);
   return {...state, error: null};
 }
 
@@ -160,24 +183,26 @@ export default function form(state = INITIAL_STATE, action) {
     return addField(clone(state), action.field);
   case FIELD_SWITCH:
     return switchField(clone(state), action.property, action.newField);
-  case FIELD_REMOVE:
+case FIELD_REMOVE:
     return removeField(clone(state), action.name);
-  case FIELD_UPDATE:
-    const {name, schema, required, newName} = action;
-    return updateField(clone(state), name, schema, required, newName);
-  case FIELD_INSERT:
+case FIELD_UPDATE:
+    const {name, schema, required, newName, formData} = action;
+    console.log("Action");
+    console.log(action);
+return updateField(clone(state), name, schema, required, newName, formData);
+case FIELD_INSERT:
     return insertField(clone(state), action.field, action.before);
-  case FIELD_SWAP:
+case FIELD_SWAP:
     return swapFields(clone(state), action.source, action.target);
-  case FORM_RESET:
+case FORM_RESET:
     return INITIAL_STATE;
-  case FORM_UPDATE_TITLE:
+case FORM_UPDATE_TITLE:
     return updateFormTitle(clone(state), action.title);
-  case FORM_UPDATE_DESCRIPTION:
+case FORM_UPDATE_DESCRIPTION:
     return updateFormDescription(clone(state), action.description);
-  case SCHEMA_RETRIEVAL_DONE:
+case SCHEMA_RETRIEVAL_DONE:
     return setSchema(clone(state), action.data);
-  default:
-    return state;
-  }
+default:
+return state;
+}
 }

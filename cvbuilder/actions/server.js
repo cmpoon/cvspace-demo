@@ -33,8 +33,8 @@ function connectivityIssues(dispatch, message) {
  * Return HTTP authentication headers from a given token.
  **/
 function getAuthenticationHeaders(token) {
-  console.log("Auth Token: " + btoa(`cv:${token}`) + " from "  + token);
-  return {Authorization: "Basic " + btoa(`cv:${token}`)};
+  console.log("Auth Token: " + btoa(`cvtoken:${token}`) + " from "  + token);
+  return {Authorization: "Basic " + btoa(`cvtoken:${token}`)};
 }
 
 /**
@@ -45,10 +45,16 @@ function getAuthenticationHeaders(token) {
  *   this function as the user is removed from the permissions.
  **/
 function initializeBucket() {
+  const token = uuid.v4();
+
   const api = new KintoClient(
     config.server.remote,
-    {headers: getAuthenticationHeaders(uuid.v4())}
+    {headers: getAuthenticationHeaders(token)}
   );
+
+  api.fetchServerInfo()
+      .then(({data}) => console.info(data));
+
   return api.createBucket(config.server.bucket, {
     safe: true,
     permissions: {
@@ -57,9 +63,13 @@ function initializeBucket() {
     }
   }).then(() => {
     api.bucket(config.server.bucket).setPermissions({
-      "write": []
+            "write": ["basicauth:"+ btoa(`cvtoken:${token}`),]
+            //"write": []
     },
     {patch: true}); // Do a PATCH request to prevent everyone to be an admin.
+  }).then(() => {
+      client.bucket(config.server.bucket).getPermissions()
+          .then(result => console.info(result));
   })
   .catch(() => {
     console.debug("Skipping bucket creation, it probably already exist.");
@@ -99,8 +109,8 @@ export function publishForm(callback) {
     bucket.createCollection(formID, {
       data: {schema, uiSchema},
       permissions: {
-        //"record:create": ["system.Authenticated"]
-          "record:create": ["system.Everyone"]
+        "record:create": ["system.Authenticated"]
+        //  "record:create": ["system.Everyone"]
       }
     })
     .then(({data}) => {
@@ -127,9 +137,9 @@ export function publishForm(callback) {
           thunk(dispatch, getState, false);
         });
       }
-        console.log("... creation skipped:");
+        console.log("... creation failed:");
       console.log({error, retry});
-      connectivityIssues(dispatch, "We were unable to publish your CV.");
+      connectivityIssues(dispatch, "Sorry, we were unable to publish your CV.");
       dispatch({type: FORM_PUBLICATION_FAILED});
     });
   };

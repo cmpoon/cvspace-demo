@@ -25,10 +25,12 @@ export default function FormActions(props) {
         </FieldListDropdown>
       </ButtonToolbar>
       <ButtonGroup className="pull-right">
-        <Button onClick={() => confirm("This action will delete all unsaved changes to the CV, Are you sure?") && props.resetForm()}>
+          {
+            /*<Button bsStyle="danger" onClick={() => confirm("This action will delete all unsaved changes to the CV, Are you sure?") && props.resetForm()}>
           <i className="glyphicon glyphicon-remove" />
           Delete <span className="hidden-xs">CV</span>
-        </Button>
+        </Button>*/
+          }
         <Button bsStyle="success" onClick={onClick}>
           <i className={`glyphicon glyphicon-${saveIconName}`} />
           Save your CV

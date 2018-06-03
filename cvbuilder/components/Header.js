@@ -33,9 +33,11 @@ export default function Header(props) {
                           <span className="icon-bar"></span>
                       </button>
 
-                      <a className="navbar-brand" href="index.html">
+
+                      <Link className="navbar-brand" to="/">
                           <h1><img src={logo} alt="logo" /></h1>
-                      </a>
+                      </Link>
+
 
                   </div>
                   <div className="collapse navbar-collapse">
